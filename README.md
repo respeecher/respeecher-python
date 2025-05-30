@@ -177,6 +177,7 @@ and transports.
 from respeecher import Respeecher
 import httpx
 client = Respeecher(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+```
 
 ## Contributing
 
