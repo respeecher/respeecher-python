@@ -35,8 +35,6 @@ jobs:
 
       - name: Test
         run: poetry run pytest -rP .
-        env:
-          RESPEECHER_API_KEY: ${{ secrets.RESPEECHER_API_KEY }}
 
   publish:
     needs: [compile, test]
