@@ -5,7 +5,7 @@ from .generation_request import GenerationRequestParams
 from .output_format import OutputFormatParams
 
 
-class OfflineGenerationRequestParams(GenerationRequestParams):
+class BytesGenerationRequestParams(GenerationRequestParams):
     output_format: typing_extensions.NotRequired[OutputFormatParams]
     """
     Audio format specification.

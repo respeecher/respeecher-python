@@ -2,6 +2,7 @@
 
 import typing_extensions
 from ..types.gender import Gender
+from .sampling_params import SamplingParamsParams
 
 
 class VoiceParams(typing_extensions.TypedDict):
@@ -9,3 +10,7 @@ class VoiceParams(typing_extensions.TypedDict):
     gender: typing_extensions.NotRequired[Gender]
     accent: typing_extensions.NotRequired[str]
     age: typing_extensions.NotRequired[str]
+    sampling_params: typing_extensions.NotRequired[SamplingParamsParams]
+    """
+    Default sampling params for this voice.
+    """

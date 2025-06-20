@@ -3,7 +3,7 @@ name = "respeecher"
 
 [tool.poetry]
 name = "respeecher"
-version = "0.0.72"
+version = "0.0.97"
 description = ""
 readme = "README.md"
 authors = []
@@ -31,7 +31,7 @@ packages = [
 ]
 
 [project.urls]
-Repository = 'https://github.com/respeecher/respeecher-api-python'
+Repository = 'https://github.com/respeecher/respeecher-python'
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -77,7 +77,7 @@ ignore = [
     "F841"   # Local variable ... is assigned to but never used
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 section-order = ["future", "standard-library", "third-party", "first-party"]
 
 [build-system]

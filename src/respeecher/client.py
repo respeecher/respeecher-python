@@ -20,6 +20,8 @@ class Respeecher:
     environment : RespeecherEnvironment
         The environment to use for requests from the client. from .environment import RespeecherEnvironment
 
+
+
         Defaults to RespeecherEnvironment.PUBLIC_EN_RT
 
 
@@ -37,7 +39,10 @@ class Respeecher:
     Examples
     --------
     from respeecher import Respeecher
-    client = Respeecher(api_key="YOUR_API_KEY", )
+
+    client = Respeecher(
+        api_key="YOUR_API_KEY",
+    )
     """
 
     def __init__(
@@ -79,6 +84,8 @@ class AsyncRespeecher:
     environment : RespeecherEnvironment
         The environment to use for requests from the client. from .environment import RespeecherEnvironment
 
+
+
         Defaults to RespeecherEnvironment.PUBLIC_EN_RT
 
 
@@ -96,7 +103,10 @@ class AsyncRespeecher:
     Examples
     --------
     from respeecher import AsyncRespeecher
-    client = AsyncRespeecher(api_key="YOUR_API_KEY", )
+
+    client = AsyncRespeecher(
+        api_key="YOUR_API_KEY",
+    )
     """
 
     def __init__(

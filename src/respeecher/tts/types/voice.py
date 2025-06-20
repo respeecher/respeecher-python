@@ -4,16 +4,21 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...voices.types.sampling_params import SamplingParams
 
 
 class Voice(UniversalBaseModel):
     """
     Examples
     --------
-    {'id': 'samantha'}
+    {"id": "samantha"}
     """
 
     id: str
+    sampling_params: typing.Optional[SamplingParams] = pydantic.Field(default=None)
+    """
+    Optional sampling params overrides. The defaults for this voice can be obtained through the [Voices](../voices/list) endpoint.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

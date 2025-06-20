@@ -67,8 +67,14 @@ class TtsClient:
         Examples
         --------
         from respeecher import Respeecher
-        client = Respeecher(api_key="YOUR_API_KEY", )
-        client.tts.bytes(transcript='Hello, World!', voice={'id': 'samantha'}, )
+
+        client = Respeecher(
+            api_key="YOUR_API_KEY",
+        )
+        client.tts.bytes(
+            transcript="Hello, World!",
+            voice={"id": "samantha"},
+        )
         """
         with self._raw_client.bytes(
             transcript=transcript, voice=voice, output_format=output_format, request_options=request_options
@@ -107,8 +113,14 @@ class TtsClient:
         Examples
         --------
         from respeecher import Respeecher
-        client = Respeecher(api_key="YOUR_API_KEY", )
-        response = client.tts.sse(transcript='Hello, World!', voice={'id': 'samantha'}, )
+
+        client = Respeecher(
+            api_key="YOUR_API_KEY",
+        )
+        response = client.tts.sse(
+            transcript="Hello, World!",
+            voice={"id": "samantha"},
+        )
         for chunk in response:
             yield chunk
         """
@@ -120,7 +132,7 @@ class TtsClient:
     @contextmanager
     def connect(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[TtsSocketClient]:
         """
-        A single connection for multiple concurrent text-to-speech generations, with input and output streaming. Provides the best latency and performance out of text-to-speech endpoints.
+        A single connection for multiple concurrent text-to-speech generations, with input and output streaming. Provides the best latency and performance out of the text-to-speech endpoints.
 
         Parameters
         ----------
@@ -141,8 +153,16 @@ class TtsClient:
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:
-                raise ApiError(status_code=status_code, body="Websocket initialized with invalid credentials.")
-            raise ApiError(status_code=status_code, body="Unexpected error when initializing websocket connection.")
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
 
 
 class AsyncTtsClient:
@@ -192,18 +212,29 @@ class AsyncTtsClient:
 
         Examples
         --------
-        from respeecher import AsyncRespeecher
         import asyncio
-        client = AsyncRespeecher(api_key="YOUR_API_KEY", )
+
+        from respeecher import AsyncRespeecher
+
+        client = AsyncRespeecher(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.tts.bytes(transcript='Hello, World!', voice={'id': 'samantha'}, )
+            await client.tts.bytes(
+                transcript="Hello, World!",
+                voice={"id": "samantha"},
+            )
+
+
         asyncio.run(main())
         """
         async with self._raw_client.bytes(
             transcript=transcript, voice=voice, output_format=output_format, request_options=request_options
         ) as r:
-            async for data in r.data:
-                yield data
+            async for _chunk in r.data:
+                yield _chunk
 
     async def sse(
         self,
@@ -236,27 +267,38 @@ class AsyncTtsClient:
 
         Examples
         --------
-        from respeecher import AsyncRespeecher
         import asyncio
-        client = AsyncRespeecher(api_key="YOUR_API_KEY", )
+
+        from respeecher import AsyncRespeecher
+
+        client = AsyncRespeecher(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            response = await client.tts.sse(transcript='Hello, World!', voice={'id': 'samantha'}, )
+            response = await client.tts.sse(
+                transcript="Hello, World!",
+                voice={"id": "samantha"},
+            )
             async for chunk in response:
                 yield chunk
+
+
         asyncio.run(main())
         """
         async with self._raw_client.sse(
             transcript=transcript, voice=voice, output_format=output_format, request_options=request_options
         ) as r:
-            async for data in r.data:
-                yield data
+            async for _chunk in r.data:
+                yield _chunk
 
     @asynccontextmanager
     async def connect(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[AsyncTtsSocketClient]:
         """
-        A single connection for multiple concurrent text-to-speech generations, with input and output streaming. Provides the best latency and performance out of text-to-speech endpoints.
+        A single connection for multiple concurrent text-to-speech generations, with input and output streaming. Provides the best latency and performance out of the text-to-speech endpoints.
 
         Parameters
         ----------
@@ -277,5 +319,13 @@ class AsyncTtsClient:
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:
-                raise ApiError(status_code=status_code, body="Websocket initialized with invalid credentials.")
-            raise ApiError(status_code=status_code, body="Unexpected error when initializing websocket connection.")
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )

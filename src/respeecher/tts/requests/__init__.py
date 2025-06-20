@@ -2,30 +2,29 @@
 
 # isort: skip_file
 
+from .bytes_generation_request import BytesGenerationRequestParams
 from .cancellation_request import CancellationRequestParams
 from .chunk import ChunkParams
 from .contextful_chunk import ContextfulChunkParams
 from .contextful_generation_request import ContextfulGenerationRequestParams
 from .done import DoneParams
-from .error import ErrorParams
 from .generation_request import GenerationRequestParams
-from .offline_generation_request import OfflineGenerationRequestParams
 from .output_format import OutputFormatParams
 from .response import ResponseParams, Response_ChunkParams, Response_DoneParams, Response_ErrorParams
 from .server_sent_event import ServerSentEventParams, ServerSentEvent_ChunkParams, ServerSentEvent_ErrorParams
+from .streaming_error import StreamingErrorParams
 from .streaming_generation_request import StreamingGenerationRequestParams
 from .streaming_output_format import StreamingOutputFormatParams
 from .voice import VoiceParams
 
 __all__ = [
+    "BytesGenerationRequestParams",
     "CancellationRequestParams",
     "ChunkParams",
     "ContextfulChunkParams",
     "ContextfulGenerationRequestParams",
     "DoneParams",
-    "ErrorParams",
     "GenerationRequestParams",
-    "OfflineGenerationRequestParams",
     "OutputFormatParams",
     "ResponseParams",
     "Response_ChunkParams",
@@ -34,6 +33,7 @@ __all__ = [
     "ServerSentEventParams",
     "ServerSentEvent_ChunkParams",
     "ServerSentEvent_ErrorParams",
+    "StreamingErrorParams",
     "StreamingGenerationRequestParams",
     "StreamingOutputFormatParams",
     "VoiceParams",

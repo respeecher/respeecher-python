@@ -28,8 +28,14 @@ The easiest way to generate text-to-speech audio. Not suitable for latency-sensi
 
 ```python
 from respeecher import Respeecher
-client = Respeecher(api_key="YOUR_API_KEY", )
-client.tts.bytes(transcript='Hello, World!', voice={'id': 'samantha'}, )
+
+client = Respeecher(
+    api_key="YOUR_API_KEY",
+)
+client.tts.bytes(
+    transcript="Hello, World!",
+    voice={"id": "samantha"},
+)
 
 ```
 </dd>
@@ -109,8 +115,14 @@ Stream text-to-speech audio as JSONL (JSON lines) objects over HTTP. A less perf
 
 ```python
 from respeecher import Respeecher
-client = Respeecher(api_key="YOUR_API_KEY", )
-response = client.tts.sse(transcript='Hello, World!', voice={'id': 'samantha'}, )
+
+client = Respeecher(
+    api_key="YOUR_API_KEY",
+)
+response = client.tts.sse(
+    transcript="Hello, World!",
+    voice={"id": "samantha"},
+)
 for chunk in response.data:
     yield chunk
 
@@ -193,7 +205,10 @@ List of available voices with IDs and metadata.
 
 ```python
 from respeecher import Respeecher
-client = Respeecher(api_key="YOUR_API_KEY", )
+
+client = Respeecher(
+    api_key="YOUR_API_KEY",
+)
 client.voices.list()
 
 ```

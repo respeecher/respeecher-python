@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from .types import Gender, Voice
-from .requests import VoiceParams
+from .types import Gender, SamplingParams, Voice
+from .requests import SamplingParamsParams, VoiceParams
 
-__all__ = ["Gender", "Voice", "VoiceParams"]
+__all__ = ["Gender", "SamplingParams", "SamplingParamsParams", "Voice", "VoiceParams"]

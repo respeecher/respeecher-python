@@ -76,7 +76,7 @@ class RawTtsClient:
             omit=OMIT,
         ) as _response:
 
-            def stream() -> HttpResponse[typing.Iterator[bytes]]:
+            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
                 try:
                     if 200 <= _response.status_code < 300:
                         _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
@@ -86,10 +86,12 @@ class RawTtsClient:
                     _response.read()
                     _response_json = _response.json()
                 except JSONDecodeError:
-                    raise ApiError(status_code=_response.status_code, body=_response.text)
-                raise ApiError(status_code=_response.status_code, body=_response_json)
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield stream()
+            yield _stream()
 
     @contextlib.contextmanager
     def sse(
@@ -138,7 +140,7 @@ class RawTtsClient:
             omit=OMIT,
         ) as _response:
 
-            def stream() -> HttpResponse[typing.Iterator[ServerSentEvent]]:
+            def _stream() -> HttpResponse[typing.Iterator[ServerSentEvent]]:
                 try:
                     if 200 <= _response.status_code < 300:
 
@@ -162,15 +164,17 @@ class RawTtsClient:
                     _response.read()
                     _response_json = _response.json()
                 except JSONDecodeError:
-                    raise ApiError(status_code=_response.status_code, body=_response.text)
-                raise ApiError(status_code=_response.status_code, body=_response_json)
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield stream()
+            yield _stream()
 
     @contextmanager
     def connect(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[TtsSocketClient]:
         """
-        A single connection for multiple concurrent text-to-speech generations, with input and output streaming. Provides the best latency and performance out of text-to-speech endpoints.
+        A single connection for multiple concurrent text-to-speech generations, with input and output streaming. Provides the best latency and performance out of the text-to-speech endpoints.
 
         Parameters
         ----------
@@ -191,8 +195,16 @@ class RawTtsClient:
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:
-                raise ApiError(status_code=status_code, body="Websocket initialized with invalid credentials.")
-            raise ApiError(status_code=status_code, body="Unexpected error when initializing websocket connection.")
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
 
 
 class AsyncRawTtsClient:
@@ -247,7 +259,7 @@ class AsyncRawTtsClient:
             omit=OMIT,
         ) as _response:
 
-            async def stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
                 try:
                     if 200 <= _response.status_code < 300:
                         _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
@@ -258,10 +270,12 @@ class AsyncRawTtsClient:
                     await _response.aread()
                     _response_json = _response.json()
                 except JSONDecodeError:
-                    raise ApiError(status_code=_response.status_code, body=_response.text)
-                raise ApiError(status_code=_response.status_code, body=_response_json)
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield await stream()
+            yield await _stream()
 
     @contextlib.asynccontextmanager
     async def sse(
@@ -310,7 +324,7 @@ class AsyncRawTtsClient:
             omit=OMIT,
         ) as _response:
 
-            async def stream() -> AsyncHttpResponse[typing.AsyncIterator[ServerSentEvent]]:
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[ServerSentEvent]]:
                 try:
                     if 200 <= _response.status_code < 300:
 
@@ -334,17 +348,19 @@ class AsyncRawTtsClient:
                     await _response.aread()
                     _response_json = _response.json()
                 except JSONDecodeError:
-                    raise ApiError(status_code=_response.status_code, body=_response.text)
-                raise ApiError(status_code=_response.status_code, body=_response_json)
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield await stream()
+            yield await _stream()
 
     @asynccontextmanager
     async def connect(
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[AsyncTtsSocketClient]:
         """
-        A single connection for multiple concurrent text-to-speech generations, with input and output streaming. Provides the best latency and performance out of text-to-speech endpoints.
+        A single connection for multiple concurrent text-to-speech generations, with input and output streaming. Provides the best latency and performance out of the text-to-speech endpoints.
 
         Parameters
         ----------
@@ -365,5 +381,13 @@ class AsyncRawTtsClient:
         except websockets.exceptions.InvalidStatusCode as exc:
             status_code: int = exc.status_code
             if status_code == 401:
-                raise ApiError(status_code=status_code, body="Websocket initialized with invalid credentials.")
-            raise ApiError(status_code=status_code, body="Unexpected error when initializing websocket connection.")
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )

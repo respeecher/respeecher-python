@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .sampling_params import SamplingParamsParams
 from .voice import VoiceParams
 
-__all__ = ["VoiceParams"]
+__all__ = ["SamplingParamsParams", "VoiceParams"]

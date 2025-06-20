@@ -13,7 +13,11 @@ class ContextfulGenerationRequest(StreamingGenerationRequest):
     """
     Examples
     --------
-    {'context_id': 'abc', 'transcript': 'Hello, World!', 'voice': {'id': 'samantha'}}
+    {
+        "context_id": "abc",
+        "transcript": "Hello, World!",
+        "voice": {"id": "samantha"},
+    }
     """
 
     context_id: str = pydantic.Field()

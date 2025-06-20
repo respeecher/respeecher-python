@@ -12,7 +12,7 @@ class Response_Chunk(UniversalBaseModel):
     """
     Examples
     --------
-    {'context_id': 'abc', 'data': 'base64', 'type': 'chunk'}
+    {"context_id": "abc", "data": "base64", "type": "chunk"}
     """
 
     type: typing.Literal["chunk"] = "chunk"
@@ -33,7 +33,7 @@ class Response_Done(UniversalBaseModel):
     """
     Examples
     --------
-    {'context_id': 'abc', 'data': 'base64', 'type': 'chunk'}
+    {"context_id": "abc", "data": "base64", "type": "chunk"}
     """
 
     type: typing.Literal["done"] = "done"
@@ -53,7 +53,7 @@ class Response_Error(UniversalBaseModel):
     """
     Examples
     --------
-    {'context_id': 'abc', 'data': 'base64', 'type': 'chunk'}
+    {"context_id": "abc", "data": "base64", "type": "chunk"}
     """
 
     type: typing.Literal["error"] = "error"
@@ -72,6 +72,6 @@ class Response_Error(UniversalBaseModel):
 
 
 """
-{'context_id': 'abc', 'data': 'base64', 'type': 'chunk'}
+{"context_id": "abc", "data": "base64", "type": "chunk"}
 """
 Response = typing.Union[Response_Chunk, Response_Done, Response_Error]

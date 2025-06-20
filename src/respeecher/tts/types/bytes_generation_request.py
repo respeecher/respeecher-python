@@ -8,11 +8,11 @@ from .generation_request import GenerationRequest
 from .output_format import OutputFormat
 
 
-class OfflineGenerationRequest(GenerationRequest):
+class BytesGenerationRequest(GenerationRequest):
     """
     Examples
     --------
-    {'transcript': 'Hello, World!', 'voice': {'id': 'samantha'}}
+    {"transcript": "Hello, World!", "voice": {"id": "samantha"}}
     """
 
     output_format: typing.Optional[OutputFormat] = pydantic.Field(default=None)

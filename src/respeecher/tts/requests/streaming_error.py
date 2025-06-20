@@ -3,7 +3,7 @@
 import typing_extensions
 
 
-class ErrorParams(typing_extensions.TypedDict):
+class StreamingErrorParams(typing_extensions.TypedDict):
     error: str
     """
     Error message.

@@ -3,6 +3,7 @@
 # isort: skip_file
 
 from .gender import Gender
+from .sampling_params import SamplingParams
 from .voice import Voice
 
-__all__ = ["Gender", "Voice"]
+__all__ = ["Gender", "SamplingParams", "Voice"]

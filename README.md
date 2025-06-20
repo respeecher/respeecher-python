@@ -1,6 +1,6 @@
 # Respeecher Python Library
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Frespeecher%2Frespeecher-api-python)
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Frespeecher%2Frespeecher-python)
 [![pypi](https://img.shields.io/pypi/v/respeecher)](https://pypi.python.org/pypi/respeecher)
 
 The Respeecher Python library provides convenient access to the Respeecher API from Python.
@@ -13,7 +13,7 @@ pip install respeecher
 
 ## Reference
 
-A full reference for this library is available [here](./reference.md).
+A full reference for this library is available [here](https://github.com/respeecher/respeecher-python/blob/HEAD/./reference.md).
 
 ## Usage
 
@@ -21,8 +21,14 @@ Instantiate and use the client with the following:
 
 ```python
 from respeecher import Respeecher
-client = Respeecher(api_key="YOUR_API_KEY", )
-client.tts.bytes(transcript='Hello, World!', voice={'id': 'samantha'}, )
+
+client = Respeecher(
+    api_key="YOUR_API_KEY",
+)
+client.tts.bytes(
+    transcript="Hello, World!",
+    voice={"id": "samantha"},
+)
 ```
 
 ## Async Client
@@ -30,12 +36,24 @@ client.tts.bytes(transcript='Hello, World!', voice={'id': 'samantha'}, )
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from respeecher import AsyncRespeecher
 import asyncio
-client = AsyncRespeecher(api_key="YOUR_API_KEY", )
+
+from respeecher import AsyncRespeecher
+
+client = AsyncRespeecher(
+    api_key="YOUR_API_KEY",
+)
+
+
 async def main() -> None:
-    await client.tts.bytes(transcript='Hello, World!', voice={'id': 'samantha'}, )
-asyncio.run(main())```
+    await client.tts.bytes(
+        transcript="Hello, World!",
+        voice={"id": "samantha"},
+    )
+
+
+asyncio.run(main())
+```
 
 ## Exception Handling
 
@@ -44,6 +62,7 @@ will be thrown.
 
 ```python
 from respeecher.core.api_error import ApiError
+
 try:
     client.tts.bytes(...)
 except ApiError as e:
@@ -57,8 +76,14 @@ The SDK supports streaming responses, as well, the response will be a generator 
 
 ```python
 from respeecher import Respeecher
-client = Respeecher(api_key="YOUR_API_KEY", )
-response = client.tts.sse(transcript='Hello, World!', voice={'id': 'samantha'}, )
+
+client = Respeecher(
+    api_key="YOUR_API_KEY",
+)
+response = client.tts.sse(
+    transcript="Hello, World!",
+    voice={"id": "samantha"},
+)
 for chunk in response.data:
     yield chunk
 ```
@@ -74,7 +99,9 @@ You can either iterate through the returned `SocketClient` to process messages a
 import threading
 
 from respeecher import Respeecher
+
 client = Respeecher(...)
+
 with client.tts.connect() as socket:
     # Iterate over the messages as they arrive
     for message in socket
@@ -98,7 +125,9 @@ with client.tts.connect() as socket:
 import asyncio
 
 from respeecher import AsyncRespeecher
+
 client = AsyncRespeecher(...)
+
 async with client.tts.connect() as socket:
     # Iterate over the messages as they arrive
     async for message in socket
@@ -124,14 +153,18 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from respeecher import Respeecher
-client = Respeecher(..., )
+
+client = Respeecher(
+    ...,
+)
 response = client.tts.with_raw_response.bytes(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 with client.tts.with_raw_response.sse(...) as response:
     print(response.headers)  # access the response headers
     for chunk in response.data:
-        print(chunk)  # access the underlying object(s)```
+        print(chunk)  # access the underlying object(s)
+```
 
 ### Retries
 
@@ -160,7 +193,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from respeecher import Respeecher
-client = Respeecher(..., timeout=20.0, )
+
+client = Respeecher(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.tts.bytes(..., request_options={
@@ -174,9 +212,16 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from respeecher import Respeecher
 import httpx
-client = Respeecher(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from respeecher import Respeecher
+
+client = Respeecher(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
 ```
 
 ## Contributing

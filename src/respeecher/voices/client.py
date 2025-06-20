@@ -39,11 +39,14 @@ class VoicesClient:
         Examples
         --------
         from respeecher import Respeecher
-        client = Respeecher(api_key="YOUR_API_KEY", )
+
+        client = Respeecher(
+            api_key="YOUR_API_KEY",
+        )
         client.voices.list()
         """
-        response = self._raw_client.list(request_options=request_options)
-        return response.data
+        _response = self._raw_client.list(request_options=request_options)
+        return _response.data
 
 
 class AsyncVoicesClient:
@@ -76,12 +79,20 @@ class AsyncVoicesClient:
 
         Examples
         --------
-        from respeecher import AsyncRespeecher
         import asyncio
-        client = AsyncRespeecher(api_key="YOUR_API_KEY", )
+
+        from respeecher import AsyncRespeecher
+
+        client = AsyncRespeecher(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
             await client.voices.list()
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.list(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.list(request_options=request_options)
+        return _response.data

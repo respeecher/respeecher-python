@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .gender import Gender
+from .sampling_params import SamplingParams
 
 
 class Voice(UniversalBaseModel):
@@ -12,6 +13,10 @@ class Voice(UniversalBaseModel):
     gender: typing.Optional[Gender] = None
     accent: typing.Optional[str] = None
     age: typing.Optional[str] = None
+    sampling_params: typing.Optional[SamplingParams] = pydantic.Field(default=None)
+    """
+    Default sampling params for this voice.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

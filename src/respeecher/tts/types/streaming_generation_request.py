@@ -12,7 +12,7 @@ class StreamingGenerationRequest(GenerationRequest):
     """
     Examples
     --------
-    {'transcript': 'Hello, World!', 'voice': {'id': 'samantha'}}
+    {"transcript": "Hello, World!", "voice": {"id": "samantha"}}
     """
 
     output_format: typing.Optional[StreamingOutputFormat] = pydantic.Field(default=None)

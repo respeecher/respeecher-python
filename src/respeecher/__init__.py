@@ -6,13 +6,15 @@ from . import tts, voices
 from .client import AsyncRespeecher, Respeecher
 from .environment import RespeecherEnvironment
 from .version import __version__
-from .voices import Gender, Voice, VoiceParams
+from .voices import Gender, SamplingParams, SamplingParamsParams, Voice, VoiceParams
 
 __all__ = [
     "AsyncRespeecher",
     "Gender",
     "Respeecher",
     "RespeecherEnvironment",
+    "SamplingParams",
+    "SamplingParamsParams",
     "Voice",
     "VoiceParams",
     "__version__",
