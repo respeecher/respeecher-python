@@ -1,1 +1,3 @@
+tests/custom/
+tests/test_live_api.py
 src/respeecher/core/pydantic_utilities.py
