@@ -56,6 +56,8 @@ def test_tts_websocket(respeecher):
                 break
 
             assert message.type == "chunk"
+            assert message.context_id == context_id
+
             audio += b64decode(message.data)
 
         assert len(audio) > 22050
