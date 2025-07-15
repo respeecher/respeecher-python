@@ -32,6 +32,11 @@ class SamplingParams(UniversalBaseModel):
     Must be between 0 and 1, inclusive.
     """
 
+    presence_penalty: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Must be between 0 and 2, inclusive.
+    """
+
     repetition_penalty: typing.Optional[float] = pydantic.Field(default=None)
     """
     Must be between 1 and 2, inclusive.

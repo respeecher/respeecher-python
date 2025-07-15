@@ -29,6 +29,11 @@ class SamplingParamsParams(typing_extensions.TypedDict):
     Must be between 0 and 1, inclusive.
     """
 
+    presence_penalty: typing_extensions.NotRequired[float]
+    """
+    Must be between 0 and 2, inclusive.
+    """
+
     repetition_penalty: typing_extensions.NotRequired[float]
     """
     Must be between 1 and 2, inclusive.
