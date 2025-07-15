@@ -3,7 +3,7 @@ name = "respeecher"
 
 [tool.poetry]
 name = "respeecher"
-version = "0.1.1"
+version = "1.0.0"
 description = "Respeecher API SDK"
 readme = "README.md"
 authors = []
