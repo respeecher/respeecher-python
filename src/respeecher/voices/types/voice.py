@@ -15,7 +15,7 @@ class Voice(UniversalBaseModel):
     age: typing.Optional[str] = None
     sampling_params: typing.Optional[SamplingParams] = pydantic.Field(default=None)
     """
-    Default sampling params for this voice.
+    Default sampling params for this voice. See also [Sampling Params Guide](../tts/sampling-params-guide).
     """
 
     if IS_PYDANTIC_V2:

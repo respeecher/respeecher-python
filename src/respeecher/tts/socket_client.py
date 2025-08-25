@@ -2,6 +2,7 @@
 
 import json
 import typing
+from json.decoder import JSONDecodeError
 
 import websockets
 import websockets.sync.connection as websockets_sync_connection
@@ -11,17 +12,22 @@ from .types.cancellation_request import CancellationRequest
 from .types.contextful_generation_request import ContextfulGenerationRequest
 from .types.response import Response
 
+try:
+    from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
+except ImportError:
+    from websockets import WebSocketClientProtocol  # type: ignore
+
 TtsSocketClientResponse = typing.Union[Response]
 
 
 class AsyncTtsSocketClient(EventEmitterMixin):
-    def __init__(self, *, websocket: websockets.WebSocketClientProtocol):
+    def __init__(self, *, websocket: WebSocketClientProtocol):
         super().__init__()
         self._websocket = websocket
 
     async def __aiter__(self):
         async for message in self._websocket:
-            yield parse_obj_as(TtsSocketClientResponse, message)  # type: ignore
+            yield parse_obj_as(TtsSocketClientResponse, json.loads(message))  # type: ignore
 
     async def start_listening(self):
         """
@@ -33,15 +39,16 @@ class AsyncTtsSocketClient(EventEmitterMixin):
         - EventType.ERROR if an error occurs
         - EventType.CLOSE when connection is closed
         """
-        self._emit(EventType.OPEN, None)
+        await self._emit_async(EventType.OPEN, None)
         try:
             async for raw_message in self._websocket:
-                parsed = parse_obj_as(TtsSocketClientResponse, raw_message)  # type: ignore
-                self._emit(EventType.MESSAGE, parsed)
-        except websockets.WebSocketException as exc:
-            self._emit(EventType.ERROR, exc)
+                json_data = json.loads(raw_message)
+                parsed = parse_obj_as(TtsSocketClientResponse, json_data)  # type: ignore
+                await self._emit_async(EventType.MESSAGE, parsed)
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
+            await self._emit_async(EventType.ERROR, exc)
         finally:
-            self._emit(EventType.CLOSE, None)
+            await self._emit_async(EventType.CLOSE, None)
 
     async def send_generate(self, message: ContextfulGenerationRequest) -> None:
         """
@@ -62,7 +69,8 @@ class AsyncTtsSocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = await self._websocket.recv()
-        return parse_obj_as(TtsSocketClientResponse, data)  # type: ignore
+        json_data = json.loads(data)
+        return parse_obj_as(TtsSocketClientResponse, json_data)  # type: ignore
 
     async def _send(self, data: typing.Any) -> None:
         """
@@ -86,7 +94,7 @@ class TtsSocketClient(EventEmitterMixin):
 
     def __iter__(self):
         for message in self._websocket:
-            yield parse_obj_as(TtsSocketClientResponse, message)  # type: ignore
+            yield parse_obj_as(TtsSocketClientResponse, json.loads(message))  # type: ignore
 
     def start_listening(self):
         """
@@ -101,9 +109,10 @@ class TtsSocketClient(EventEmitterMixin):
         self._emit(EventType.OPEN, None)
         try:
             for raw_message in self._websocket:
-                parsed = parse_obj_as(TtsSocketClientResponse, raw_message)  # type: ignore
+                json_data = json.loads(raw_message)
+                parsed = parse_obj_as(TtsSocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
-        except websockets.WebSocketException as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -127,7 +136,8 @@ class TtsSocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = self._websocket.recv()
-        return parse_obj_as(TtsSocketClientResponse, data)  # type: ignore
+        json_data = json.loads(data)
+        return parse_obj_as(TtsSocketClientResponse, json_data)  # type: ignore
 
     def _send(self, data: typing.Any) -> None:
         """

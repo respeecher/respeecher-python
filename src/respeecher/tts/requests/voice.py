@@ -8,5 +8,5 @@ class VoiceParams(typing_extensions.TypedDict):
     id: str
     sampling_params: typing_extensions.NotRequired[SamplingParamsParams]
     """
-    Optional sampling params overrides. The defaults for this voice can be obtained through the [Voices](../voices/list) endpoint.
+    Optional sampling params overrides. The defaults for this voice can be obtained through the [Voices](../voices/list#response.body.sampling_params) endpoint. See also [Sampling Params Guide](../tts/sampling-params-guide).
     """

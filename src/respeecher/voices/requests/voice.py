@@ -12,5 +12,5 @@ class VoiceParams(typing_extensions.TypedDict):
     age: typing_extensions.NotRequired[str]
     sampling_params: typing_extensions.NotRequired[SamplingParamsParams]
     """
-    Default sampling params for this voice.
+    Default sampling params for this voice. See also [Sampling Params Guide](../tts/sampling-params-guide).
     """

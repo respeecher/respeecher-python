@@ -27,6 +27,9 @@ class Respeecher:
 
 
     api_key : typing.Optional[str]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -50,6 +53,7 @@ class Respeecher:
         *,
         environment: RespeecherEnvironment = RespeecherEnvironment.PUBLIC_EN_RT,
         api_key: typing.Optional[str] = os.getenv("RESPEECHER_API_KEY"),
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -64,6 +68,7 @@ class Respeecher:
         self._client_wrapper = SyncClientWrapper(
             environment=environment,
             api_key=api_key,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -91,6 +96,9 @@ class AsyncRespeecher:
 
 
     api_key : typing.Optional[str]
+    headers : typing.Optional[typing.Dict[str, str]]
+        Additional headers to send with every request.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -114,6 +122,7 @@ class AsyncRespeecher:
         *,
         environment: RespeecherEnvironment = RespeecherEnvironment.PUBLIC_EN_RT,
         api_key: typing.Optional[str] = os.getenv("RESPEECHER_API_KEY"),
+        headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -128,6 +137,7 @@ class AsyncRespeecher:
         self._client_wrapper = AsyncClientWrapper(
             environment=environment,
             api_key=api_key,
+            headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
