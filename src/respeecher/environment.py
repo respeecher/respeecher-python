@@ -5,6 +5,7 @@ from __future__ import annotations
 
 class RespeecherEnvironment:
     PUBLIC_EN_RT: RespeecherEnvironment
+    PUBLIC_UA_RT: RespeecherEnvironment
 
     def __init__(self, *, base: str, ws: str):
         self.base = base
@@ -13,4 +14,7 @@ class RespeecherEnvironment:
 
 RespeecherEnvironment.PUBLIC_EN_RT = RespeecherEnvironment(
     base="https://api.respeecher.com/v1/public/tts/en-rt", ws="wss://api.respeecher.com/v1/public/tts/en-rt"
+)
+RespeecherEnvironment.PUBLIC_UA_RT = RespeecherEnvironment(
+    base="https://api.respeecher.com/v1/public/tts/ua-rt", ws="wss://api.respeecher.com/v1/public/tts/ua-rt"
 )
